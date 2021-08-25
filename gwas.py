@@ -103,16 +103,16 @@ def main(args):
 		fm.run_cmd("cat %s | parallel -j %s" % (cmd_file,args.threads))
 
 parser = argparse.ArgumentParser(description='GWAS pipeline',formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('--vcf', help='BCF file',required = True)
-parser.add_argument('--pheno-csv', help='CSV file',required = True)
+parser.add_argument('--vcf', help='VCF file',required = True)
+parser.add_argument('--pheno-csv', help='CSV file with phenotypes',required = True)
 
 group = parser.add_mutually_exclusive_group(required = True)
-group.add_argument('--pheno-names', nargs="+",help='Columns file')
-group.add_argument('--pheno-name-file', help='Columns file')
+group.add_argument('--pheno-names', nargs="+",help='Names of the phenotypes to analyse, must be the same as the column names in the csv file')
+group.add_argument('--pheno-name-file', help='File containing the names of the phenotypes to analyse (one per line), must be the same as the column names in the csv file')
 
-parser.add_argument('--pheno-id-column',default="id", help='Columns file')
-parser.add_argument('--preprocess',default=False,action='store_true', help='Columns file')
-parser.add_argument('--threads','-t',default=4,type=int, help='Columns file')
+parser.add_argument('--pheno-id-column',default="id", help='Name of the column in the phenotype CSV file containing IDs matching to the VCF file')
+parser.add_argument('--preprocess',default=False,action='store_true', help="Don't run gemma and only preprocess the files")
+parser.add_argument('--threads','-t',default=4,type=int, help='Number of threads to use')
 parser.set_defaults(func=main)
 
 args = parser.parse_args()
